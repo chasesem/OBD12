@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:background="@color/main_color"
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+        </View>
+        <TextView
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:text="@string/add_car_owner_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_marginLeft="5dp"
+
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="@string/user_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_user_code"
+            android:layout_gravity="center_vertical"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_marginLeft="5dp"
+
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="@string/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_user_name"
+            android:layout_gravity="center_vertical"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_marginLeft="5dp"
+
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="@string/sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_sex"
+            android:layout_gravity="center_vertical"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_marginLeft="5dp"
+
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="@string/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_gravity="center_vertical"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="@string/telePhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_telePhone"
+            android:layout_marginLeft="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="@string/province"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_province"
+            android:layout_marginLeft="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="@string/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_city"
+            android:layout_marginLeft="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="@string/area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_area"
+            android:layout_marginLeft="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="@string/street"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_street"
+            android:layout_marginLeft="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/white"
+            android:background="@drawable/save_record_btn"
+            android:text="@string/save"
+            android:id="@+id/save_car_owner_message_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+
+</LinearLayout>
