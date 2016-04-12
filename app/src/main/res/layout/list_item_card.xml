@@ -52,6 +52,35 @@
             android:text="@string/list_item_right_button"
             android:textSize="12sp"
             android:textStyle="normal" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+
+        <RatingBar
+
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyleSmall"
+            android:id="@+id/ratingbar_Small"
+            />
+
+        <TextView
+            android:textSize="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginLeft="10dp"
+            android:text="暂无评论"
+            android:id="@+id/show_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
     </LinearLayout>
 
 </LinearLayout>

@@ -6,6 +6,14 @@
     android:orientation="vertical"
     android:background="@color/bg_gray">
 
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <Button
         android:textColor="@color/white"
         android:background="@drawable/save_record_btn"
@@ -19,7 +27,9 @@
         android:layout_below="@id/save_recode_btn"
         android:id="@+id/time_layout"
         android:background="@color/white"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="44dp">
 
@@ -50,7 +60,9 @@
         android:layout_below="@+id/time_layout"
         android:id="@+id/mileage_layout"
         android:background="@color/white"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="44dp">
 
@@ -83,12 +95,13 @@
 
     </RelativeLayout>
 
-
     <RelativeLayout
         android:layout_below="@+id/mileage_layout"
         android:id="@+id/event_layout"
         android:background="@color/white"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="44dp">
 
@@ -163,7 +176,9 @@
         android:layout_below="@+id/event_layout"
         android:id="@+id/cost_layout"
         android:background="@color/white"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="44dp">
 
@@ -200,7 +215,9 @@
         android:id="@+id/other_layout"
         android:background="@color/white"
         android:layout_below="@+id/cost_layout"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -219,10 +236,66 @@
 
     </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/start_layout"
+            android:background="@color/white"
+            android:layout_below="@+id/other_layout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:text="评分"
+                android:id="@+id/comment_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <RatingBar
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/comment_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyle"
+            android:id="@+id/ratingbar_Indicator"
+            />
+
+            </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/comment_layout"
+            android:background="@color/white"
+            android:layout_below="@+id/start_layout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:text="评论"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/et_comment"
+                android:layout_marginLeft="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/record_grid_layout"
-        android:layout_below="@+id/other_layout"
+        android:layout_below="@+id/comment_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -239,4 +312,7 @@
 
 
 
+
+</RelativeLayout>
+    <!--</ScrollView>-->
 </RelativeLayout>

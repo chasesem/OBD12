@@ -24,7 +24,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "fixtype varchar(10)," +
                 "cost varchar(20)," +
                 "fixitem varchar(50)," +
-                "save varchar(5))");
+                "save varchar(5)," +
+                "rating varchar(5)," +
+                "comment varchar(50)" +
+                ")");
 
         db.execSQL("DROP TABLE IF EXISTS account");
         db.execSQL("CREATE TABLE account (id integer primary key autoincrement, phone varchar(20))");

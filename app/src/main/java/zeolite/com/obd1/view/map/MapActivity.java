@@ -49,63 +49,54 @@ import com.baidu.platform.comapi.basestruct.GeoPoint;
 
 import zeolite.com.obd1.R;
 
-//http://blog.csdn.net/ye_yun_lin/article/details/23563965
-
 public class MapActivity extends Activity {
 
-    //BMapManager 对象管理地图、定位、搜索功能
     private BMapManager mBMapManager;
-    private com.baidu.mapapi.map.MapView mapView = null;                     //地图主控件
-    private MapController mMapController = null;  //地图控制
-    MKMapViewListener mMapListener = null;         //处理地图事件回调
-    private MKSearch mMKSearch;                         //定义搜索服务类
-    //搜索
+    private com.baidu.mapapi.map.MapView mapView = null;
+    private MapController mMapController = null;
+    MKMapViewListener mMapListener = null;
+    private MKSearch mMKSearch;
+
     private EditText keyWordEditText;
     private EditText cityEditText;
     private Button queryButton;
     private static StringBuilder sb;
     private MyLocationOverlay myLocationOverlay;
-    //定位
+
     private Button button1;
     private LocationManager locationManager;
     private String provider;
-    //方法二 定位位置
+
     private BDLocation myLocation;
-    private LocationData mLocData;        //用户位置信息
-    private LocationClient mLocClient;     //定位SDK的核心类
-    private MyLocationOverlay locationOverlay = null;  //我的图层
-    private PopupOverlay pop;                //弹出pop 我的位置
-    private int flag=0;                             //标记变量 定位我的位置=1 POI为2
+    private LocationData mLocData;
+    private LocationClient mLocClient;
+    private MyLocationOverlay locationOverlay = null;
+    private PopupOverlay pop;
+    private int flag=0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /**
-         * 创建对象BMapManager并初始化操作
-         * V2.3.1中init(APIKey,null) V2.4.1在AndroidManifest中赋值AK
-         * 注意 初始化操作在setContentView()前
-         */
+
         mBMapManager = new BMapManager(getApplication());
         mBMapManager.init(null);
         setContentView(R.layout.mao_layout);
-        //获取对象
+
         mapView = (com.baidu.mapapi.map.MapView) findViewById(R.id.map_view);
         cityEditText = (EditText) findViewById(R.id.city_edittext);
         keyWordEditText = (EditText) findViewById(R.id.keyword_edittext);
         queryButton = (Button) findViewById(R.id.query_button);
         button1 = (Button) findViewById(R.id.button1);
         Log.i("mapView", String.valueOf(mapView));
-        //地图初始化
-        mMapController = mapView.getController();    //获取地图控制器
-        mMapController.enableClick(true);                  //设置地图是否响应点击事件
-        mMapController.setZoom(16);                         //设置地图缩放级别
-        mapView.setBuiltInZoomControls(true);          //显示内置缩放控件
 
-        /**
-         * 初始化MKSearch 调用城市和POI搜索
-         */
+        mMapController = mapView.getController();
+        mMapController.enableClick(true);
+        mMapController.setZoom(16);
+        mapView.setBuiltInZoomControls(true);
+
+
         mMKSearch = new MKSearch();
         mMKSearch.init(mBMapManager, new MySearchListener());
         queryButton.setOnClickListener(new OnClickListener() {
@@ -118,115 +109,63 @@ public class MapActivity extends Activity {
                 mMapController = mapView.getController();
                 mMapController.setZoom(10);
                 sb = new StringBuilder();  //内容清空
-                //输入正确城市关键字
+
                 String city = cityEditText.getText().toString().trim();
                 String keyWord = keyWordEditText.getText().toString().trim();
-                if(city.isEmpty()) { //默认城市设置为贵阳
-                    city="贵阳";
+                if(city.isEmpty()) {
+                    city="珠海";
                 }
-                //如果关键字为空只搜索城市 GEO搜索
+
                 if(keyWord.isEmpty()) {
-                    mMKSearch.geocode(city, city);     //具体地址和城市 geocode(adress, city)
+                    mMKSearch.geocode(city, city);
                 }
                 else {
-                    //搜索城市+关键字
-                    mMKSearch.setPoiPageCapacity(10);  //每页返回POI数
+
+                    mMKSearch.setPoiPageCapacity(10);
                     mMKSearch.poiSearchInCity(city, keyWord);
                 }
             }
         });
 
-        /**
-         * 定位自己位置
-         */
-        /* 方法一
-		button1.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				 //获取所有位置提供器
-		        locationManager =  (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		        List<String> providerList = locationManager.getProviders(true);
-		        if(providerList.contains(LocationManager.NETWORK_PROVIDER)) { //网络提供器
-		        	provider = LocationManager.NETWORK_PROVIDER;
-		        } else if(provider.contains(LocationManager.GPS_PROVIDER)) { //GPS提供器
-		        	provider = LocationManager.GPS_PROVIDER;
-		        } else {
-		        	Toast.makeText(MainActivity.this, "No location provider to use",
-		        			Toast.LENGTH_SHORT).show();
-		        	return;
-		        }
-		        //获取到记录当前位置
-		        Location location = locationManager.getLastKnownLocation(provider);
-		        if(location!=null) {
-		        	//定位我的位置
-		        	MapController controller = mapView.getController();
-		        	controller.setZoom(16);
-		        	//latitude 纬度 longitude 经度
-		        	GeoPoint point =  new GeoPoint((int) (location.getLatitude()*1E6),
-		        			(int) (location.getLongitude()*1E6));
-		        	controller.setCenter(point); //设置地图中心
-		        	mapView.getOverlays().clear(); //清除地图上所有覆盖物
-		        	MyLocationOverlay locationOverlay = new MyLocationOverlay(mapView);
-		        	LocationData locationData = new LocationData();
-		        	locationData.latitude = location.getLatitude(); //纬度
-		        	locationData.longitude = location.getLongitude(); //经度
-		        	locationOverlay.setData(locationData);
-		        	//添加覆盖物
-		        	mapView.getOverlays().add(locationOverlay);
-		        	mapView.refresh(); //刷新
-		        }
-			}
-		});
-        */
 
-
-        //方法二
         button1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 flag = 1;
                 locationManager =  (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                //设置缩放级别 级别越高地图显示精细
+
                 MapController controller = mapView.getController();
                 controller.setZoom(16);
-                //实例化定位服务，LocationClient类必须在主线程中声明
+
                 mLocClient = new LocationClient(getApplicationContext());
-                mLocClient.registerLocationListener(new BDLocationListenerImpl()); //注册定位监听接口
-                /**
-                 * LocationClientOption 该类用来设置定位SDK的定位方式。
-                 */
+                mLocClient.registerLocationListener(new BDLocationListenerImpl());
+
                 LocationClientOption option = new LocationClientOption();
-                option.setOpenGps(true); //打开GPRS
-                option.setAddrType("all"); //返回的定位结果包含地址信息
-                option.setCoorType("bd09ll"); //返回的定位结果是百度经纬度,默认值gcj02
-                option.setPriority(LocationClientOption.GpsFirst); // 设置GPS优先
-                option.setScanSpan(5000); //设置发起定位请求的间隔时间为5000ms
-                option.disableCache(false); //禁止启用缓存定位
-                mLocClient.setLocOption(option);  //设置定位参数
-                mLocClient.start();  // 调用此方法开始定位
-                //定位图层初始化
+                option.setOpenGps(true);
+                option.setAddrType("all");
+                option.setCoorType("bd09ll");
+                option.setPriority(LocationClientOption.GpsFirst);
+                option.setScanSpan(5000);
+                option.disableCache(false);
+                mLocClient.setLocOption(option);
+                mLocClient.start();
+
                 mapView.getOverlays().clear();
                 locationOverlay= new MyLocationOverlay(mapView);
-                //实例化定位数据，并设置在我的位置图层
+
                 mLocData = new LocationData();
                 locationOverlay.setData(mLocData);
-                //添加定位图层
+
                 mapView.getOverlays().add(locationOverlay);
-                //修改定位数据后刷新图层生效
+
                 mapView.refresh();
             }
         });
     }
 
-    /**
-     * 定位接口，需要实现两个方法
-     * 参考 http://blog.csdn.net/xiaanming/article/details/11380619
-     */
+
     public class BDLocationListenerImpl implements BDLocationListener {
 
-        /**
-         * 接收异步返回的定位结果，参数是BDLocation类型参数
-         */
         @Override
         public void onReceiveLocation(BDLocation location) {
             if (location == null || flag != 1) {
@@ -240,40 +179,37 @@ public class MapActivity extends Activity {
             GeoPoint point = new GeoPoint((int) (location.getLatitude() * 1E6),
                     (int) (location.getLongitude() * 1E6));
             controller.setCenter(point);
-            //如果不显示定位精度圈，将accuracy赋值为0即可
-            //mLocData.accuracy = location.getRadius();
+
             mLocData.direction = location.getDerect();
             mLocData.accuracy = 0;
-            //将定位数据设置到定位图层里
+
             locationOverlay.setData(mLocData);
-            //更新图层数据执行刷新后生效
-            mapView.refresh();
-            //覆盖物
+
             if(flag==1) {
-                //添加图形
+
                 pop = new PopupOverlay(mapView, new PopupClickListener() {
                     @Override
                     public void onClickedPopup(int index) {
                     }
                 });
-                Bitmap[] bitmaps = new Bitmap[3];
-                try {
-                    bitmaps[0] = BitmapFactory.decodeResource(getResources(),
-                            R.drawable.left);
-                    bitmaps[1] = BitmapFactory.decodeResource(getResources(),
-                            R.drawable.middle);
-                    bitmaps[2] = BitmapFactory.decodeResource(getResources(),
-                            R.drawable.right);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                pop.showPopup(bitmaps, point, 18);
+//                Bitmap[] bitmaps = new Bitmap[3];
+//                try {
+//                    bitmaps[0] = BitmapFactory.decodeResource(getResources(),
+//                            R.drawable.left);
+//                    bitmaps[1] = BitmapFactory.decodeResource(getResources(),
+//                            R.drawable.middle);
+//                    bitmaps[2] = BitmapFactory.decodeResource(getResources(),
+//                            R.drawable.right);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                pop.showPopup(bitmaps, point, 18);
+//                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.middle);
+//                pop.showPopup(bitmap,point,18);
             }
         }
 
-        /**
-         * 接收异步返回的POI查询结果，参数是BDLocation类型参数
-         */
+
         @Override
         public void onReceivePoi(BDLocation poiLocation) {
 
@@ -308,28 +244,20 @@ public class MapActivity extends Activity {
         super.onPause();
     }
 
-    /**
-     * 内部类实现MKSearchListener接口,用于实现异步搜索服务
-     */
+
     public class MySearchListener implements MKSearchListener {
 
-        /**
-         * 根据经纬度搜索地址信息结果
-         * 同时mMKSearch.geocode(city, city)搜索城市返回至该函数
-         *
-         * @param result 搜索结果
-         * @param iError 错误号（0表示正确返回）
-         */
+
         @Override
         public void onGetAddrResult(MKAddrInfo result, int iError) {
             if (result == null) {
                 return;
             }
             StringBuffer sbcity = new StringBuffer();
-            sbcity.append(result.strAddr).append("\n");   //经纬度所对应的位置
-            mapView.getOverlays().clear();                      //清除地图上已有的所有覆盖物
-            mMapController.setCenter(result.geoPt);      //置为地图中心
-            //添加原点并刷新
+            sbcity.append(result.strAddr).append("\n");
+            mapView.getOverlays().clear();
+            mMapController.setCenter(result.geoPt);
+
             LocationData locationData = new LocationData();
             locationData.latitude = result.geoPt.getLatitudeE6();
             locationData.longitude = result.geoPt.getLongitudeE6();
@@ -337,7 +265,7 @@ public class MapActivity extends Activity {
             myLocationOverlay.setData(locationData);
             mapView.getOverlays().add(myLocationOverlay);
             mapView.refresh();
-            // 通过AlertDialog显示地址信息
+
             new AlertDialog.Builder(MapActivity.this)
                     .setTitle("显示当前城市地图")
                     .setMessage(sbcity.toString())
@@ -348,37 +276,31 @@ public class MapActivity extends Activity {
                     }).create().show();
         }
 
-        /**
-         * POI搜索结果（范围检索、城市POI检索、周边检索）
-         *
-         * @param result 搜索结果
-         * @param type 返回结果类型（11,12,21:poi列表 7:城市列表）
-         * @param iError 错误号（0表示正确返回）
-         */
+
         @Override
         public void onGetPoiResult(MKPoiResult result, int type, int iError) {
             if (result == null) {
                 return;
             }
-            //获取POI并显示
+
             mapView.getOverlays().clear();
-            PoiOverlay poioverlay = new PoiOverlay(MapActivity.this, mapView);  //显示POI覆盖物
-            poioverlay.setData(result.getAllPoi());         //设置搜索到的POI数据
-            mapView.getOverlays().add(poioverlay);    //兴趣点标注在地图上
+            PoiOverlay poioverlay = new PoiOverlay(MapActivity.this, mapView);
+            poioverlay.setData(result.getAllPoi());
+            mapView.getOverlays().add(poioverlay);
             mapView.refresh();
-            //设置其中一个搜索结果所在地理坐标为地图的中心
+
             if(result.getNumPois() > 0) {
                 MKPoiInfo poiInfo = result.getPoi(0);
                 mMapController.setCenter(poiInfo.pt);
             }
-            //添加StringBuffer 遍历当前页返回的POI (默认只返回10个)
-            sb.append("共搜索到").append(result.getNumPois()).append("个POI\n");
+
+            sb.append("共搜索到").append(result.getNumPois()).append("个\n");
             for (MKPoiInfo poiInfo : result.getAllPoi()) {
                 sb.append("名称：").append(poiInfo.name).append("\n");
             }
             // 通过AlertDialog显示当前页搜索到的POI
             new AlertDialog.Builder(MapActivity.this)
-                    .setTitle("搜索到的POI信息")
+                    .setTitle("搜索到的信息")
                     .setMessage(sb.toString())
                     .setPositiveButton("关闭", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -387,32 +309,17 @@ public class MapActivity extends Activity {
                     }).create().show();
         }
 
-        /**
-         * 驾车路线搜索结果
-         *
-         * @param result 搜索结果
-         * @param iError 错误号（0表示正确返回）
-         */
+
         @Override
         public void onGetDrivingRouteResult(MKDrivingRouteResult result, int iError) {
         }
 
-        /**
-         * 公交换乘路线搜索结果
-         *
-         * @param result 搜索结果
-         * @param iError 错误号（0表示正确返回）
-         */
+
         @Override
         public void onGetTransitRouteResult(MKTransitRouteResult result, int iError) {
         }
 
-        /**
-         * 步行路线搜索结果
-         *
-         * @param result 搜索结果
-         * @param iError 错误号（0表示正确返回）
-         */
+
         @Override
         public void onGetWalkingRouteResult(MKWalkingRouteResult result, int iError) {
         }

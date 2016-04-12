@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -58,6 +59,8 @@ public class CardsAdapter extends BaseAdapter {
             holder.itemText=(TextView)convertView.findViewById(R.id.list_item_card_text);
             holder.itemButton1= (Button) convertView.findViewById(R.id.list_item_card_button_1);
             holder.itemButton2=(Button)convertView.findViewById(R.id.list_item_card_button_2);
+            holder.ratingBar=(RatingBar)convertView.findViewById(R.id.ratingbar_Small);
+            holder.commentText=(TextView)convertView.findViewById(R.id.show_comment);
             convertView.setTag(holder);
         }else{
             holder=(ViewHolder)convertView.getTag();
@@ -70,10 +73,13 @@ public class CardsAdapter extends BaseAdapter {
         List<RecordEntity> recordEntities=recordCRUB.findAllRecord();
 
 //        for(int i=0;i<recordEntities.size();i++){
-            RecordEntity recordEntity=recordEntities.get(position);
+        RecordEntity recordEntity=recordEntities.get(position);
 
-            holder.itemButton1.setText(recordEntity.getFixitem());
-            holder.itemButton2.setText(recordEntity.getCost());
+        holder.itemButton1.setText(recordEntity.getFixitem());
+        holder.itemButton2.setText(recordEntity.getCost());
+        holder.ratingBar.setRating(Float.parseFloat(recordEntity.getRatings()));
+        holder.commentText.setText(recordEntity.getComment());
+
 
 //        }
 
@@ -86,6 +92,8 @@ public class CardsAdapter extends BaseAdapter {
         private TextView itemText;
         private Button itemButton1;
         private Button itemButton2;
+        private RatingBar ratingBar;
+        private TextView commentText;
     }
 
 }

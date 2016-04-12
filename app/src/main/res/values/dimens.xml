@@ -6,4 +6,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="process_width">30dp</dimen>
+    <dimen name="background_progressBar_Width">15dp</dimen>
 </resources>

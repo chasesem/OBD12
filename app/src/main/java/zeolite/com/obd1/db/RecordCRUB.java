@@ -38,6 +38,8 @@ public class RecordCRUB {
         contentValues.put("cost",record.getCost());
         contentValues.put("fixitem",record.getFixitem());
         contentValues.put("save",record.getSave());
+        contentValues.put("rating",record.getRatings());
+        contentValues.put("comment",record.getComment());
         db.insert("record", null, contentValues);
         db.close();
     }
@@ -61,8 +63,10 @@ public class RecordCRUB {
             String cost=cursor.getString(cursor.getColumnIndex("cost"));
             String fixitem=cursor.getString(cursor.getColumnIndex("fixitem"));
             String save=cursor.getString(cursor.getColumnIndex("save"));
-//            Log.i("findAll",time+"--"+currentmeil+"--"+fixtype+"--"+cost+"--"+fixitem+"--"+save);
-            RecordEntity recordEntity=new RecordEntity(time,currentmeil,fixtype,cost,fixitem,save);
+            String ratings=cursor.getString(cursor.getColumnIndex("rating"));
+            String comment=cursor.getString(cursor.getColumnIndex("comment"));
+            Log.i("findAll",time+"--"+currentmeil+"--"+fixtype+"--"+cost+"--"+fixitem+"--"+save+"--"+ratings+"--"+comment);
+            RecordEntity recordEntity=new RecordEntity(time,currentmeil,fixtype,cost,fixitem,save,ratings,comment);
             recordEntities.add(recordEntity);
         }
         cursor.close();

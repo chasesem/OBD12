@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -62,6 +63,8 @@ public class AddRecordActivity extends Activity implements View.OnClickListener{
     private RadioButton repairBtn;
     private RadioButton insuranceBtn;
 
+    private RatingBar ratingBar;
+    private EditText commentET;
 
     private RecordGridAdapter recordGridAdapter;
 
@@ -72,6 +75,8 @@ public class AddRecordActivity extends Activity implements View.OnClickListener{
     private Map<Integer,String> fixitemMap;
     private String fixitem="";
     private String save;
+    private String ratings="0";
+    private String comment;
 
     private ArrayList<String> nameList;
 
@@ -127,6 +132,7 @@ public class AddRecordActivity extends Activity implements View.OnClickListener{
 
         fixitemMap=new HashMap<Integer,String>();
 
+        ratingBar.setOnRatingBarChangeListener(new RatingBarChangeListenerImpl());
 
     }
 
@@ -148,6 +154,10 @@ public class AddRecordActivity extends Activity implements View.OnClickListener{
         maintainBtn=(RadioButton)findViewById(R.id.cb_maintain);
         insuranceBtn=(RadioButton)findViewById(R.id.cb_insurance);
         repairBtn=(RadioButton)findViewById(R.id.cb_repair);
+
+        ratingBar=(RatingBar)findViewById(R.id.ratingbar_Indicator);
+        commentET=(EditText)findViewById(R.id.et_comment);
+
 
     }
 
@@ -177,7 +187,8 @@ public class AddRecordActivity extends Activity implements View.OnClickListener{
                 }
                 save="1";
 
-                RecordEntity recordEntity=new RecordEntity(time,currentmeil,fixtype,cost,fixitem,save);
+                comment=commentET.getText().toString();
+                RecordEntity recordEntity=new RecordEntity(time,currentmeil,fixtype,cost,fixitem,save,ratings,comment);
                 Log.i("kjhjkjk", recordEntity.toString());
                 recordCRUB.saveRecord(recordEntity);
 //                recordCRUB.findAllRecord();
@@ -253,5 +264,16 @@ public class AddRecordActivity extends Activity implements View.OnClickListener{
         }
 
         return super.onTouchEvent(event);
+    }
+
+
+    private class RatingBarChangeListenerImpl implements RatingBar.OnRatingBarChangeListener {
+        @Override
+        public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+
+            System.out.println("现在的等级为 rating="+rating+",是否是用户触发 fromUser="+fromUser);
+            ratings=String.valueOf(rating);
+        }
+
     }
 }

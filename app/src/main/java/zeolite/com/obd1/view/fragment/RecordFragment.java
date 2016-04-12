@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import zeolite.com.obd1.R;
@@ -37,6 +38,8 @@ public class RecordFragment extends Fragment {
 
     private Button addRecordBtn;
 
+    private TextView maintainText;
+
     private CardsAdapter cardsAdapter;
 
     private ArrayList<String> items;
@@ -50,7 +53,8 @@ public class RecordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_card_layout,container,false);
 
-
+        maintainText=(TextView)rootView.findViewById(R.id.maintain_text);
+        maintainText.setText("保养计划：\n暂无");
         cardsList=(ListView)rootView.findViewById(R.id.cards_list);
         setupList();
 

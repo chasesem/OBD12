@@ -1,25 +1,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".OBD2MonitorMainActivity" >
 
-    <!--<TextView-->
-    <!--android:focusable="true"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="35dp"-->
 
-    <!--android:hint="@string/connected_status"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_alignParentEnd="true"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:gravity="center"-->
-    <!--android:id="@+id/connected_status_text"/>-->
+
+    <RelativeLayout
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/process"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cpb_background_progressbar_color="#FFCDD2"
+            app:cpb_background_progressbar_width="5dp"
+            app:cpb_progressbar_color="#F44336"
+            app:cpb_progressbar_width="10dp" />
+
+
+        <Button
+            android:id="@+id/connect"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_button"
+            android:textSize="24dp"
+            android:text="一键连接"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
 
     <TextView
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:id="@+id/response_msg_text"
@@ -27,6 +48,7 @@
         android:scrollbars="vertical"
         android:layout_alignParentLeft="true"/>
     <TextView
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="@string/supported_pids"
@@ -39,6 +61,7 @@
         android:gravity="center|left"/>
 
     <EditText
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:hint="@string/input_command"
@@ -51,6 +74,7 @@
 
 
     <Button
+        android:visibility="invisible"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:text="@string/send_command"
@@ -60,6 +84,7 @@
         android:enabled="false"/>
 
     <Button
+        android:visibility="invisible"
         android:layout_below="@+id/send_cmd_btn"
         android:layout_width="300dp"
         android:layout_height="50dp"
@@ -70,6 +95,7 @@
         android:enabled="false"/>
 
     <Button
+        android:visibility="invisible"
         android:layout_below="@+id/send_timer_btn"
         android:layout_width="300dp"
         android:layout_height="50dp"
@@ -82,6 +108,7 @@
 
 
     <TextView
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/result_text"
@@ -89,6 +116,7 @@
         />
 
     <Button
+        android:visibility="invisible"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/select_device"
@@ -100,6 +128,7 @@
 
 
     <Button
+        android:visibility="invisible"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/disconnect_device"

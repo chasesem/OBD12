@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 
+import org.json.JSONArray;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -67,6 +69,40 @@ public class CarMessage extends Activity implements View.OnClickListener {
 
     private void initDate() {
         saveBtn.setOnClickListener(this);
+
+
+        //getCarINfo
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection conn;
+                InputStream is;
+                try {
+                    conn = (HttpURLConnection) new URL(URLAddress.GET_BRAND_INFO).openConnection();
+                    conn.setRequestMethod("GET");
+                    is = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                    String line = "";
+                    StringBuffer result = new StringBuffer();
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+//                    Log.i("temp", result.toString());
+
+                    String h="<?xml version=\"1.0\" encoding=\"utf-8\"?><string xmlns=\"http://tempuri.org/\">";
+                    String e="</string>";
+                    String temp=result.toString().replace(h,"");
+                    temp=temp.replace(e,"");
+//                    Log.i("temp", temp);
+
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
     }
 
     private void initView() {
@@ -85,58 +121,63 @@ public class CarMessage extends Activity implements View.OnClickListener {
             case R.id.save_car_message_btn:
 
 
-                int i=0;
-                ++i;
-                final CarInfo carInfo=new CarInfo(i,codeET.getText().toString(),bCodeET.getText().toString(),productYearET.getText().toString(),annualDateET.getText().toString(),
-                        colorET.getText().toString(),remarkET.getText().toString());
+                if (codeET.getText().toString().length()!=17){
+                    handler.sendEmptyMessage(1);
+                }else {
 
-                JSONObject temp = new JSONObject();
-                temp.put("Id", carInfo.getId());
-                temp.put("Code", carInfo.getCode());
-                temp.put("bCode", carInfo.getbCode());
-                temp.put("productYear", carInfo.getProductYear());
-                temp.put("annualDate", carInfo.getAnnualDate());
-                temp.put("color", carInfo.getColor());
-                temp.put("remark", carInfo.getRemark());
+                    int i = 0;
+                    ++i;
+                    final CarInfo carInfo = new CarInfo(i, codeET.getText().toString(), bCodeET.getText().toString(), productYearET.getText().toString(), annualDateET.getText().toString(),
+                            colorET.getText().toString(), remarkET.getText().toString());
 
-                final String url= URLAddress.CREATE_OWN_CAR+"?option="+temp.toJSONString();
-                Log.i("url",url.toString());
+                    JSONObject temp = new JSONObject();
+                    temp.put("Id", carInfo.getId());
+                    temp.put("Code", carInfo.getCode());
+                    temp.put("bCode", carInfo.getbCode());
+                    temp.put("productYear", carInfo.getProductYear());
+                    temp.put("annualDate", carInfo.getAnnualDate());
+                    temp.put("color", carInfo.getColor());
+                    temp.put("remark", carInfo.getRemark());
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        HttpURLConnection conn;
-                        InputStream is;
-                        try {
-                            conn = (HttpURLConnection) new URL(url).openConnection();
-                            conn.setRequestMethod("GET");
-                            is = conn.getInputStream();
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                            String line = "";
-                            StringBuffer result = new StringBuffer();
-                            while ( (line = reader.readLine()) != null ){
-                                result.append(line);
+                    final String url = URLAddress.CREATE_OWN_CAR + "?option=" + temp.toJSONString().replaceAll(" ", "");
+                    Log.i("url", url.toString());
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            HttpURLConnection conn;
+                            InputStream is;
+                            try {
+                                conn = (HttpURLConnection) new URL(url).openConnection();
+                                conn.setRequestMethod("GET");
+                                is = conn.getInputStream();
+                                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                                String line = "";
+                                StringBuffer result = new StringBuffer();
+                                while ((line = reader.readLine()) != null) {
+                                    result.append(line);
+                                }
+                                Log.i("temp", result.toString());
+
+                                if (result.toString().contains("True")) {
+
+                                    RecordCRUB recordCRUB = new RecordCRUB(CarMessage.this);
+                                    recordCRUB.saveCarInfo(carInfo);
+
+                                    Intent intent = new Intent(CarMessage.this, ShowCarMessage.class);
+                                    CarMessage.this.setResult(1, intent);
+                                    finish();
+
+                                } else {
+                                    handler.sendEmptyMessage(1);
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                            Log.i("temp",result.toString());
-
-                            if (result.toString().contains("True")){
-
-                                RecordCRUB recordCRUB=new RecordCRUB(CarMessage.this);
-                                recordCRUB.saveCarInfo(carInfo);
-
-                                Intent intent=new Intent(CarMessage.this,ShowCarMessage.class);
-                                CarMessage.this.setResult(1, intent);
-                                finish();
-
-                            }else {
-                                handler.sendEmptyMessage(1);
-                            }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
-                    }
-                }).start();
+                    }).start();
+                }
 
                 break;
         }

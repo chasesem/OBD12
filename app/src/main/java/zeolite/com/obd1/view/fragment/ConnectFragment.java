@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ import com.avos.avoscloud.okhttp.OkHttpClient;
 import com.avos.avoscloud.okhttp.Request;
 import com.avos.avoscloud.okhttp.RequestBody;
 import com.avos.avoscloud.okhttp.Response;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 
 import org.json.JSONObject;
@@ -129,6 +131,8 @@ public class ConnectFragment extends Fragment {
 
     // widgets defination
 //    private TextView mConnectedStatusTxt = null;
+    private Button connectBtn;
+    private CircularProgressBar circularProgressBar;
     private TextView mResponseMessageTxt = null;
     private TextView mSupportedPidsTxt = null;
     private EditText mInputOBD2CMDEditTxt = null;
@@ -198,6 +202,8 @@ public class ConnectFragment extends Fragment {
                             mCancelTimerBtn.setEnabled(false);
                             mDisconnectDeviceBtn.setEnabled(false);
 //                            mConnectedStatusTxt.setText("");
+                            circularProgressBar.setProgress(0);
+                            connectBtn.setText("一键连接");
                             break;
                         default:
                             break;
@@ -983,6 +989,16 @@ public class ConnectFragment extends Fragment {
             }
         }
 
+
+        circularProgressBar = (CircularProgressBar)view.findViewById(R.id.process);
+        circularProgressBar.setColor(ContextCompat.getColor(getContext(), R.color.color1));
+        circularProgressBar.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color2));
+        circularProgressBar.setProgressBarWidth(getResources().getDimension(R.dimen.process_width));
+        circularProgressBar.setBackgroundProgressBarWidth(getResources().getDimension(R.dimen.background_progressBar_Width));
+//        int animationDuration = 50000; // 2500ms = 2,5s
+//        circularProgressBar.setProgressWithAnimation(100, animationDuration); // Default duration = 1500ms
+
+
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(mBluetoothAdapter == null){
             Toast.makeText(getContext(), R.string.bt_not_available,
@@ -1000,6 +1016,13 @@ public class ConnectFragment extends Fragment {
         resultText=(TextView)view.findViewById(R.id.result_text);
 
 //        mConnectedStatusTxt  = (TextView)view.findViewById(R.id.connected_status_text);
+        connectBtn=(Button)view.findViewById(R.id.connect);
+        connectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buttonOnClick(view);
+            }
+        });
         mResponseMessageTxt  = (TextView)view.findViewById(R.id.response_msg_text);
         mResponseMessageTxt.setMovementMethod(ScrollingMovementMethod.getInstance());
         mSupportedPidsTxt = (TextView)view.findViewById(R.id.supported_pids_text);
@@ -1079,6 +1102,20 @@ public class ConnectFragment extends Fragment {
                 timer.cancel();
                 break;
 
+            case R.id.connect:
+                selectDevice();
+
+
+
+                timer=new Timer();
+                task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        mMsgHandler.sendEmptyMessage(MESSAGE_TIMER);
+                    }
+                };
+                timer.schedule(task, 1000, 1000);
+                break;
 
             default:
                 break;
@@ -1125,10 +1162,12 @@ public class ConnectFragment extends Fragment {
 
     private void setConnectedStatusTitle(CharSequence title){
 //        mConnectedStatusTxt.setText(title);
+        connectBtn.setText(title);
     }
 
     private void setConnectedStatusTitle(int resID){
 //        mConnectedStatusTxt.setText(resID);
+        connectBtn.setText(resID);
     }
 
     private void autoResponse(String resMsg){
@@ -1342,6 +1381,8 @@ public class ConnectFragment extends Fragment {
             case REQUEST_CONNECT_DEVICE_SECURE:
                 if(resultCode == Activity.RESULT_OK){
                     connectDevice(data, true);
+                    int animationDuration = 2000; // 2500ms = 2,5s
+                    circularProgressBar.setProgressWithAnimation(100, animationDuration); // Default duration = 1500ms
                 }
                 break;
             case REQUEST_CONNECT_DEVICE_INSECURE:

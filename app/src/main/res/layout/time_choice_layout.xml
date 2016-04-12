@@ -6,7 +6,8 @@
     android:id="@+id/time_choice_layout"
     android:layout_alignParentBottom="true"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <DatePicker
         android:layout_marginLeft="-15dp"

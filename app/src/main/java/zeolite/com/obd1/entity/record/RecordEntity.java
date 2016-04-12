@@ -11,26 +11,18 @@ public class RecordEntity {
     private String fixitem;
     private String save;
 
+    private String ratings;
+    private String comment;
 
-    public RecordEntity(String time, String currentmeil, String fixtype, String cost, String fixitem, String save) {
+    public RecordEntity(String time, String currentmeil, String fixtype, String cost, String fixitem, String save, String ratings, String comment) {
         this.time = time;
         this.currentmeil = currentmeil;
         this.fixtype = fixtype;
         this.cost = cost;
         this.fixitem = fixitem;
         this.save = save;
-}
-
-    @Override
-    public String toString() {
-        return "RecordEntity{" +
-                "time='" + time + '\'' +
-                ", currentmeil='" + currentmeil + '\'' +
-                ", fixtype='" + fixtype + '\'' +
-                ", cost='" + cost + '\'' +
-                ", fixitem='" + fixitem + '\'' +
-                ", save='" + save + '\'' +
-                '}';
+        this.ratings = ratings;
+        this.comment = comment;
     }
 
     public String getTime() {
@@ -79,5 +71,21 @@ public class RecordEntity {
 
     public void setSave(String save) {
         this.save = save;
+    }
+
+    public String getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(String ratings) {
+        this.ratings = ratings;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

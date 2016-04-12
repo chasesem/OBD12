@@ -51,6 +51,7 @@ dependencies {
     compile files('libs/locSDK_3.1.jar')
     compile files('libs/baidumapapi_v2_4_1.jar')
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
-
+    compile 'com.mikhaellopez:circularprogressbar:1.1.1'
     compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }
