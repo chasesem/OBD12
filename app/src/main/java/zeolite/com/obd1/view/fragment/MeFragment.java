@@ -74,7 +74,7 @@ public class MeFragment extends Fragment {
 
         MeListEntity meListEntity=new MeListEntity("message","完善信息");
         MeListEntity meListEntity1=new MeListEntity("message","添加车辆");
-        MeListEntity meListEntity2=new MeListEntity("locate","地图定位");
+        MeListEntity meListEntity2=new MeListEntity("locate","搜索附近维修厂");
         meListEntities=new ArrayList<MeListEntity>();
         meListEntities.add(meListEntity);
         meListEntities.add(meListEntity1);

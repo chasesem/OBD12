@@ -69,7 +69,7 @@ import zeolite.com.obd1.entity.upload.Engine;
 import zeolite.com.obd1.entity.upload.Oil;
 import zeolite.com.obd1.entity.upload.UploadData;
 import zeolite.com.obd1.view.bluetooth.OBD2MonitorDevicesActivity;
-import zeolite.com.obd1.view.bluetooth.OBD2MonitorHelpActivity;
+
 import zeolite.com.obd1.view.bluetooth.OBD2MonitorService;
 
 /**
@@ -1474,9 +1474,6 @@ public class ConnectFragment extends Fragment {
                 getActivity().finish();
                 break;
             case R.id.menu_help:
-                Intent helpIntent = new Intent();
-                helpIntent.setClass(getActivity(),OBD2MonitorHelpActivity.class);
-                startActivity(helpIntent);
                 break;
             case R.id.menu_res_ok:
                 autoRes = AUTO_RES.AUTO_RES_OK;
