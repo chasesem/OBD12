@@ -32,15 +32,19 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS account");
         db.execSQL("CREATE TABLE account (id integer primary key autoincrement, phone varchar(20))");
 
+//        public CarInfo(int id, String brandCode, String brandStyle, String CCode, String OCode, String productYears, String annualDate, String color, String kilometers, String remark) {
 
 
-        db.execSQL("DROP TABLE IF EXISTS carInfo");
-        db.execSQL("CREATE TABLE carInfo (id integer primary key autoincrement, code varchar(20)," +
-                "bCode varchar(20)," +
-                "productYear varchar(20)," +
-                "annualDate varchar(20)," +
+            db.execSQL("DROP TABLE IF EXISTS carInfo");
+        db.execSQL("CREATE TABLE carInfo (id integer primary key autoincrement, brandCode varchar(20)," +
+                "brandStyle varchar(20)," +
+                "CCode varchar(20)," +
+                "OCode varchar(20)," +
+                "productYears varchar(50)," +
+                "annualDate varchar(50)," +
                 "color varchar(20)," +
-                "remark varchar(20)" +
+                "kilometers varchar(50)," +
+                "remark varchar(50)" +
                 ")");
 
 

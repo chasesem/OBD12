@@ -50,15 +50,19 @@ public class ShowCarMessage extends Activity {
 
         CarInfo carInfo = recordCRUB.queryCarInfo();
         if (carInfo == null) {
-            carInfo=new CarInfo(0,"","","","","","");
+            carInfo=new CarInfo(0,"","","","","","","","","");
+//            recordCRUB.saveCarInfo(carInfo);
         }
 //            Log.i("carInfo", carInfo.getbCode());
-        showCarMsg.setText("车辆编码:" + carInfo.getCode() + "\n" +
-                "品牌编码:" + carInfo.getbCode() + "\n" +
-                "出厂年份" + carInfo.getProductYear() + "\n" +
-                "年审日期" + carInfo.getAnnualDate() + "\n" +
-                "颜色" + carInfo.getColor() + "\n" +
-                "备注" + carInfo.getRemark());
+        showCarMsg.setText("品牌编码:"+carInfo.getBrandCode()+"\n" +
+                "型号编码:"+carInfo.getBrandStyle()+"\n" +
+                "车架号:"+carInfo.getCCode()+"\n" +
+                "用户编码"+carInfo.getOCode()+"\n" +
+                "出厂年份"+carInfo.getProductYears()+"\n" +
+                "年审日期"+carInfo.getAnnualDate()+"\n" +
+                "颜色"+carInfo.getColor()+"\n" +
+                "公里数"+carInfo.getColor()+"\n" +
+                "备注"+carInfo.getRemark());
 
     }
 
@@ -78,13 +82,20 @@ public class ShowCarMessage extends Activity {
 
                 RecordCRUB recordCRUB=new RecordCRUB(ShowCarMessage.this);
 
+
                 CarInfo carInfo=recordCRUB.queryCarInfo();
-//                Log.i("carInfo",carInfo.getbCode());
-                showCarMsg.setText("车辆编码:"+carInfo.getCode()+"\n" +
-                        "品牌编码:"+carInfo.getbCode()+"\n" +
-                        "出厂年份"+carInfo.getProductYear()+"\n" +
+//                Log.i("carInfo",carInfo.getBrandCode());
+                if(carInfo==null){
+                    carInfo=new CarInfo(1,"","","","","","","","","");
+                }
+                showCarMsg.setText("品牌编码:"+carInfo.getBrandCode()+"\n" +
+                        "型号编码:"+carInfo.getBrandStyle()+"\n" +
+                        "车架号:"+carInfo.getCCode()+"\n" +
+                        "用户编码"+carInfo.getOCode()+"\n" +
+                        "出厂年份"+carInfo.getProductYears()+"\n" +
                         "年审日期"+carInfo.getAnnualDate()+"\n" +
                         "颜色"+carInfo.getColor()+"\n" +
+                        "公里数"+carInfo.getColor()+"\n" +
                         "备注"+carInfo.getRemark());
 
 

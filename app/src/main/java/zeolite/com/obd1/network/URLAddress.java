@@ -17,4 +17,7 @@ public class URLAddress {
     public static String GET_UNIT_TYPE="http://139.129.117.26:9150/ajaxService/cms/UserHandler.asmx/GetUnitType";
     public static String GET_KPI="http://139.129.117.26:9150/ajaxService/cms/UserHandler.asmx/GetKPI";
     public static String OBD_UPLOAD="http://139.129.117.26:9150/ajaxService/cms/UserHandler.asmx/OBDUpload";
+    public static String MaintenLogUpload="http://139.129.117.26:9150/ajaxService/cms/UserHandler.asmx/MaintenLogUpload";
+    public static String UPDATE_MAINTEN="http://139.129.117.26:9150/ajaxService/cms/UserHandler.asmx/UpdateMainten";
+
 }

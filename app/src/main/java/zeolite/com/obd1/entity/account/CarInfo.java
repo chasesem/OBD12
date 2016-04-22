@@ -5,81 +5,111 @@ package zeolite.com.obd1.entity.account;
  */
 public class CarInfo {
 
-    private int id;
-    private String code;
-    private String bCode;
-    private String productYear;
-    private String annualDate;
-    private String color;
-    private String remark;
+    private int Id;
+    private String BrandCode;
+    private String BrandStyle;
+    private String CCode;
+    private String OCode;
+    private String ProductYears;
+    private String AnnualDate;
+    private String Color;
+    private String kilometers;
+    private String Remark;
 
 
     public CarInfo() {
     }
 
-    public CarInfo(int id, String code, String bCode, String productYear, String annualDate, String color, String remark) {
-        this.id = id;
-        this.code = code;
-        this.bCode = bCode;
-        this.productYear = productYear;
-        this.annualDate = annualDate;
-        this.color = color;
-        this.remark = remark;
+    public CarInfo(int id, String brandCode, String brandStyle, String CCode, String OCode, String productYears, String annualDate, String color, String kilometers, String remark) {
+        Id = id;
+        BrandCode = brandCode;
+        BrandStyle = brandStyle;
+        this.CCode = CCode;
+        this.OCode = OCode;
+        ProductYears = productYears;
+        AnnualDate = annualDate;
+        Color = color;
+        this.kilometers = kilometers;
+        Remark = remark;
     }
 
     public int getId() {
-        return id;
+        return Id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        Id = id;
     }
 
-    public String getCode() {
-        return code;
+    public String getBrandCode() {
+        return BrandCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setBrandCode(String brandCode) {
+        BrandCode = brandCode;
     }
 
-    public String getbCode() {
-        return bCode;
+    public String getBrandStyle() {
+        return BrandStyle;
     }
 
-    public void setbCode(String bCode) {
-        this.bCode = bCode;
+    public void setBrandStyle(String brandStyle) {
+        BrandStyle = brandStyle;
     }
 
-    public String getProductYear() {
-        return productYear;
+    public String getCCode() {
+        return CCode;
     }
 
-    public void setProductYear(String productYear) {
-        this.productYear = productYear;
+    public void setCCode(String CCode) {
+        this.CCode = CCode;
+    }
+
+    public String getOCode() {
+        return OCode;
+    }
+
+    public void setOCode(String OCode) {
+        this.OCode = OCode;
+    }
+
+    public String getProductYears() {
+        return ProductYears;
+    }
+
+    public void setProductYears(String productYears) {
+        ProductYears = productYears;
     }
 
     public String getAnnualDate() {
-        return annualDate;
+        return AnnualDate;
     }
 
     public void setAnnualDate(String annualDate) {
-        this.annualDate = annualDate;
+        AnnualDate = annualDate;
     }
 
     public String getColor() {
-        return color;
+        return Color;
     }
 
     public void setColor(String color) {
-        this.color = color;
+        Color = color;
+    }
+
+    public String getKilometers() {
+        return kilometers;
+    }
+
+    public void setKilometers(String kilometers) {
+        this.kilometers = kilometers;
     }
 
     public String getRemark() {
-        return remark;
+        return Remark;
     }
 
     public void setRemark(String remark) {
-        this.remark = remark;
+        Remark = remark;
     }
 }

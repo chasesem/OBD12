@@ -77,16 +77,19 @@ public class ShowCarOwnerMessage extends Activity{
 
                 CarOwnerInfo carOwnerInfo=recordCRUB.queryCarOwnerInfo();
 //                Log.i("carInfo",carInfo.getbCode());
-                showCarOwnerMsg.setText("车主编码:"+carOwnerInfo.getUserCode()+"\n" +
-                        "车主姓名:"+carOwnerInfo.getUserName()+"\n" +
-                        "性别"+carOwnerInfo.getSex()+"\n" +
-                        "手机"+carOwnerInfo.getPhone()+"\n" +
-                        "家庭电话"+carOwnerInfo.getTelephone()+"\n" +
-                        "省份"+carOwnerInfo.getProvince()+"\n" +
-                        "市"+carOwnerInfo.getCity()+"\n" +
-                        "区"+carOwnerInfo.getArea()+"\n" +
-                        "街道地址"+carOwnerInfo.getStreet());
-
+                if (carOwnerInfo==null){
+                    Log.i("carInfo","null");
+                }else {
+                    showCarOwnerMsg.setText("车主编码:" + carOwnerInfo.getUserCode() + "\n" +
+                            "车主姓名:" + carOwnerInfo.getUserName() + "\n" +
+                            "性别" + carOwnerInfo.getSex() + "\n" +
+                            "手机" + carOwnerInfo.getPhone() + "\n" +
+                            "家庭电话" + carOwnerInfo.getTelephone() + "\n" +
+                            "省份" + carOwnerInfo.getProvince() + "\n" +
+                            "市" + carOwnerInfo.getCity() + "\n" +
+                            "区" + carOwnerInfo.getArea() + "\n" +
+                            "街道地址" + carOwnerInfo.getStreet());
+                }
 
                 break;
         }

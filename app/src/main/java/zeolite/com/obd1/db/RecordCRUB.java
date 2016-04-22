@@ -65,7 +65,7 @@ public class RecordCRUB {
             String save=cursor.getString(cursor.getColumnIndex("save"));
             String ratings=cursor.getString(cursor.getColumnIndex("rating"));
             String comment=cursor.getString(cursor.getColumnIndex("comment"));
-            Log.i("findAll",time+"--"+currentmeil+"--"+fixtype+"--"+cost+"--"+fixitem+"--"+save+"--"+ratings+"--"+comment);
+//            Log.i("findAll",time+"--"+currentmeil+"--"+fixtype+"--"+cost+"--"+fixitem+"--"+save+"--"+ratings+"--"+comment);
             RecordEntity recordEntity=new RecordEntity(time,currentmeil,fixtype,cost,fixitem,save,ratings,comment);
             recordEntities.add(recordEntity);
         }
@@ -105,12 +105,18 @@ public class RecordCRUB {
     public void saveCarInfo(CarInfo carInfo){
         SQLiteDatabase db=dbHelper.getWritableDatabase();
 
-        ContentValues contentValues=new ContentValues();
-        contentValues.put("code", carInfo.getCode());
-        contentValues.put("bCode",carInfo.getCode());
-        contentValues.put("productYear",carInfo.getbCode());
+//        public CarInfo(int id, String brandCode, String brandStyle, String CCode, String OCode, String productYears, String annualDate, String color, String kilometers, String remark) {
+
+
+            ContentValues contentValues=new ContentValues();
+        contentValues.put("brandCode", carInfo.getBrandCode());
+        contentValues.put("brandStyle",carInfo.getBrandStyle());
+        contentValues.put("CCode",carInfo.getCCode());
+        contentValues.put("OCode",carInfo.getOCode());
+        contentValues.put("productYears",carInfo.getProductYears());
         contentValues.put("annualDate",carInfo.getAnnualDate());
-        contentValues.put("color",carInfo.getColor());
+            contentValues.put("color",carInfo.getColor());
+            contentValues.put("kilometers",carInfo.getKilometers());
         contentValues.put("remark",carInfo.getRemark());
         db.insert("carInfo", null, contentValues);
         db.close();
@@ -121,18 +127,24 @@ public class RecordCRUB {
 
         CarInfo carInfo = null;
 
-        SQLiteDatabase db=dbHelper.getReadableDatabase();
+//        public CarInfo(int id, String brandCode, String brandStyle, String CCode, String OCode, String productYears, String annualDate, String color, String kilometers, String remark) {
+
+
+            SQLiteDatabase db=dbHelper.getReadableDatabase();
         Cursor cursor=db.query("carInfo",null,null,null,null,null,null);
         while (cursor.moveToNext()){
-            String code=cursor.getString(cursor.getColumnIndex("code"));
-            String bCode=cursor.getString(cursor.getColumnIndex("bCode"));
-            String productYear=cursor.getString(cursor.getColumnIndex("productYear"));
+            String brandCode=cursor.getString(cursor.getColumnIndex("brandCode"));
+            String brandStyle=cursor.getString(cursor.getColumnIndex("brandStyle"));
+            String CCode=cursor.getString(cursor.getColumnIndex("CCode"));
+            String OCode=cursor.getString(cursor.getColumnIndex("OCode"));
+            String productYears=cursor.getString(cursor.getColumnIndex("productYears"));
             String annualDate=cursor.getString(cursor.getColumnIndex("annualDate"));
             String color=cursor.getString(cursor.getColumnIndex("color"));
+            String kilometers=cursor.getString(cursor.getColumnIndex("kilometers"));
             String remark=cursor.getString(cursor.getColumnIndex("remark"));
 
-            carInfo=new CarInfo(1,code,bCode,productYear,annualDate,color,remark);
-            Log.i("carInfo", carInfo.getCode() + "," + carInfo.getbCode() + "," + carInfo.getProductYear() + "," + carInfo.getAnnualDate() + "," + carInfo.getCode() + "," + carInfo.getRemark());
+            carInfo=new CarInfo(1,brandCode,brandStyle,CCode,OCode,productYears,annualDate,color,kilometers,remark);
+//            Log.i("carInfo", carInfo.getCode() + "," + carInfo.getbCode() + "," + carInfo.getProductYear() + "," + carInfo.getAnnualDate() + "," + carInfo.getCode() + "," + carInfo.getRemark());
 
         }
         cursor.close();

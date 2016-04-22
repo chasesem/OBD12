@@ -25,6 +25,30 @@
         />
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_marginLeft="5dp"
+
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="品牌编码"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sp_brand_code"
+            />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_marginRight="5dp"
@@ -38,14 +62,41 @@
         <TextView
             android:layout_gravity="center_vertical"
             android:textSize="20dp"
-            android:text="@string/car_code"
+            android:text="型号编码"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sp_brand_style"
+            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_marginLeft="5dp"
+
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="车架号"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/et_code"
+            android:id="@+id/et_cCode"
             android:layout_gravity="center_vertical"
             android:layout_width="300dp"
+            android:layout_marginLeft="20dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -61,12 +112,12 @@
         <TextView
             android:layout_gravity="center_vertical"
             android:textSize="20dp"
-            android:text="@string/car_bCode"
+            android:text="用户编码"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/et_bCode"
+            android:id="@+id/et_oCode"
             android:layout_gravity="center_vertical"
             android:layout_width="300dp"
             android:layout_height="wrap_content" />
@@ -137,6 +188,29 @@
         <EditText
             android:id="@+id/et_color"
             android:layout_marginLeft="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="公里数"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_kilometers"
+            android:layout_marginLeft="20dp"
             android:layout_gravity="center_vertical"
             android:layout_width="300dp"
             android:layout_height="wrap_content" />

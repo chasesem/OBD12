@@ -47,11 +47,16 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,13 +69,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import zeolite.com.obd1.R;
+import zeolite.com.obd1.db.RecordCRUB;
+import zeolite.com.obd1.entity.account.CarInfo;
 import zeolite.com.obd1.entity.upload.Data;
 import zeolite.com.obd1.entity.upload.Engine;
+import zeolite.com.obd1.entity.upload.ObdUpload;
 import zeolite.com.obd1.entity.upload.Oil;
 import zeolite.com.obd1.entity.upload.UploadData;
+import zeolite.com.obd1.network.URLAddress;
 import zeolite.com.obd1.view.bluetooth.OBD2MonitorDevicesActivity;
 
 import zeolite.com.obd1.view.bluetooth.OBD2MonitorService;
+import zeolite.com.obd1.view.me.ShowCarMessage;
 
 /**
  * Created by Zeolite on 16/1/20.
@@ -266,7 +276,7 @@ public class ConnectFragment extends Fragment {
 //                            testObject.put(entry.getKey(), entry.getValue());
 //                        }
 //                        testObject.saveInBackground();
-//                        pidMap.clear();
+                        pidMap.clear();
                     }
 
 
@@ -305,23 +315,76 @@ public class ConnectFragment extends Fragment {
 
     //uploadData
     private void uploadPid(Map<String, Integer> pidMap) {
-        uploadData.setEngines(engine);
-        uploadData.setOils(oil);
-        uploadData.setSensor(sensorZ);
+//        uploadData.setEngines(engine);
+//        uploadData.setOils(oil);
+//        uploadData.setSensor(sensorZ);
 
-        data.setData(uploadData);
+//        data.setData(uploadData);
 
-        this.jsonString = JSON.toJSONString(data);
-        final String url = "url/ajaxService/sys/OBDHandler.asmx/OBDCheck";
-        this.jsonString=jsonString.replace("data","Data");
-        this.jsonString=jsonString.replace("engines","Engine");
-        this.jsonString=jsonString.replace("oils","Oil");
-        this.jsonString=jsonString.replace("sensors","Sensor");
-        this.jsonString=jsonString.replace("sensor","Sensor");
+        CarInfo carInfo=new CarInfo();
 
-        //System.out.println(jsonString);//json data
-        Thread thread = new MyThread1(url,this.jsonString,this);
-        thread.start();
+            ObdUpload obdUpload=new ObdUpload(carInfo.getBrandCode(), carInfo.getBrandStyle(),engine.get_010C(),engine.get_0105(),engine.get_0104(),engine.get_010E(),engine.get_012D(),engine.get_0142(),engine.get_0143(),engine.get_0163(),oil.get_010B(),oil.get_010A(), oil.get_012F(), oil.get_010F(),oil.get_0122(),oil.get_0123(), oil.get_014C(),oil.get_0159(), oil.get_015C(),oil.get_015E(),sensorZ.get_0146(),sensorZ.get_0110(), sensorZ.get_0111(),sensorZ.get_013C(),sensorZ.get_013D(),sensorZ.get_013E(),sensorZ.get_013F(),sensorZ.get_0145(), sensorZ.get_0147(),sensorZ.get_0148(),sensorZ.get_0149(),sensorZ.get_0153(),sensorZ.get_0154());
+
+                this.jsonString = JSON.toJSONString(obdUpload);
+
+//        this.jsonString=jsonString.replace("data","Data");
+//        this.jsonString=jsonString.replace("engines","Engine");
+//        this.jsonString=jsonString.replace("oils","Oil");
+//        this.jsonString=jsonString.replace("sensors","Sensor");
+//        this.jsonString=jsonString.replace("sensor","Sensor");
+        this.jsonString=jsonString.replaceAll("o","O");
+        this.jsonString="{\"BCode\":\"Porsche\",\"BStyle\":\"Cayenne\","+jsonString.substring(1,jsonString.length())+"&code=\"JF1BM95E7BG021997\"";
+
+        System.out.println(jsonString);//json data
+//        Thread thread = new MyThread1(url,this.jsonString,this);
+//        thread.start();
+//        final String urlH = "http://139.129.117.26:9150/ajaxService/cms/UserHandler.asmx/OBDUpload?option="+jsonString;
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                HttpURLConnection conn;
+//                InputStream is;
+//                try {
+//                    conn = (HttpURLConnection) new URL(urlH).openConnection();
+//                    conn.setRequestMethod("GET");
+//                    is = conn.getInputStream();
+//                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+//                    String line = "";
+//                    StringBuffer result = new StringBuffer();
+//                    while ( (line = reader.readLine()) != null ){
+//                        result.append(line);
+//                    }
+//                    Log.i("temp", result.toString());
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
+
+        final String url = URLAddress.UPDATE_MAINTEN+"?option="+jsonString;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection conn;
+                InputStream is;
+                try {
+                    conn = (HttpURLConnection) new URL(url).openConnection();
+                    conn.setRequestMethod("GET");
+                    is = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                    String line = "";
+                    StringBuffer result = new StringBuffer();
+                    while ( (line = reader.readLine()) != null ){
+                        result.append(line);
+                    }
+                    Log.i("temp", result.toString());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
     }
    public String dopost(String url , String json) throws IOException{

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -48,6 +49,7 @@ import com.baidu.mapapi.search.MKWalkingRouteResult;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 
 import zeolite.com.obd1.R;
+import zeolite.com.obd1.view.fragment.MeFragment;
 
 public class MapActivity extends Activity {
 
@@ -74,6 +76,10 @@ public class MapActivity extends Activity {
     private PopupOverlay pop;
     private int flag=0;
 
+    private double latitude=0.0;
+    private double longitude=0.0;
+
+    LocaltionInterface localtionInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +182,8 @@ public class MapActivity extends Activity {
             MapActivity.this.myLocation = location;
             mLocData.latitude = location.getLatitude();
             mLocData.longitude = location.getLongitude();
+            latitude=mLocData.latitude;
+            longitude=mLocData.longitude;
             GeoPoint point = new GeoPoint((int) (location.getLatitude() * 1E6),
                     (int) (location.getLongitude() * 1E6));
             controller.setCenter(point);
@@ -261,6 +269,8 @@ public class MapActivity extends Activity {
             LocationData locationData = new LocationData();
             locationData.latitude = result.geoPt.getLatitudeE6();
             locationData.longitude = result.geoPt.getLongitudeE6();
+            localtionInterface.getLocaltion(locationData.latitude,locationData.longitude);
+
             myLocationOverlay = new MyLocationOverlay(mapView);
             myLocationOverlay.setData(locationData);
             mapView.getOverlays().add(myLocationOverlay);
@@ -344,5 +354,39 @@ public class MapActivity extends Activity {
             // TODO Auto-generated method stub
         }
     }
+
+
+    public String location(){
+        if (latitude!=0.0&&longitude!=0.0) {
+            return latitude + "," + latitude;
+        }else{
+            return "0.0";
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+
+        Bundle bundle=new Bundle();
+        bundle.putDouble("latitude",latitude);
+        bundle.putDouble("longitude", longitude);
+        Intent intent=new Intent(MapActivity.this, MeFragment.class);
+        intent.putExtras(bundle);
+//        startActivityForResult(intent,2);
+        MapActivity.this.setResult(2,intent);
+        finish();
+    }
+
+    public interface LocaltionInterface {
+
+        public void getLocaltion(double latitude,double longitude);
+
+    }
+
+    public void setocationInterfaceListener(LocaltionInterface localtionInterface){
+        this.localtionInterface=localtionInterface;
+    }
+
 
 }

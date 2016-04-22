@@ -45,5 +45,10 @@
         android:layout_height="match_parent">
     </ListView>
 
+    <TextView
+        android:id="@+id/store_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>

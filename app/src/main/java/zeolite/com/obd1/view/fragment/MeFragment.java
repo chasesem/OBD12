@@ -15,8 +15,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alexzh.circleimageview.CircleImageView;
+import com.alibaba.fastjson.JSONObject;
 
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +35,7 @@ import zeolite.com.obd1.entity.account.CarOwnerInfo;
 import zeolite.com.obd1.entity.me.MeListEntity;
 
 import zeolite.com.obd1.entity.record.RecordEntity;
+import zeolite.com.obd1.network.URLAddress;
 import zeolite.com.obd1.view.login.LoginActivity;
 import zeolite.com.obd1.view.map.MapActivity;
 import zeolite.com.obd1.view.me.CarMessage;
@@ -53,12 +60,15 @@ public class MeFragment extends Fragment {
     private CircleImageView circleImageView;
     Intent intent;
 
+    private TextView storeMsgText;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_me, container, false);
 
         phoneNumTV=(TextView)view.findViewById(R.id.phoneNum);
+        storeMsgText=(TextView)view.findViewById(R.id.store_msg);
 
         Log.i("phoneNumTV","Account.phoneNum:");
         circleImageView=(CircleImageView)view.findViewById(R.id.imageView);
@@ -99,7 +109,7 @@ public class MeFragment extends Fragment {
                         break;
                     case 2:
                         intent = new Intent(getActivity(), MapActivity.class);
-                        startActivity(intent);
+                        startActivityForResult(intent, 2);
                         break;
                 }
 
@@ -122,6 +132,54 @@ public class MeFragment extends Fragment {
                 Account account=recordCRUB.queryAccount();
                 Log.i("accocunt",account.getPhoneNum());
                 phoneNumTV.setText(account.getPhoneNum());
+                break;
+            case 2:
+                Log.i("map", "map");
+
+                Bundle bundle=data.getExtras();
+                double latitude=bundle.getDouble("latitude");
+                double longitude=bundle.getDouble("longitude");
+
+                Log.i("location","latitude"+latitude+"longitude:"+longitude);
+
+
+                JSONObject temp = new JSONObject();
+                temp.put("Id", "1");
+                temp.put("Code", "Car1");
+                temp.put("Latitude", latitude);
+                temp.put("longitude", longitude);
+                temp.put("MaxDistance", "30");
+
+
+                final String url= "http://139.129.117.26:9150/ajaxService/cms/UserHandler.asmx/GetBestStoreGarageInfo?option="+temp.toJSONString();
+                Log.i("url",url);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        HttpURLConnection conn;
+                        InputStream is;
+                        try {
+                            conn = (HttpURLConnection) new URL(url).openConnection();
+                            conn.setRequestMethod("GET");
+                            is = conn.getInputStream();
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                            String line = "";
+                            StringBuffer result = new StringBuffer();
+                            while ( (line = reader.readLine()) != null ){
+                                result.append(line);
+                            }
+                            Log.i("temp", result.toString());
+
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+
                 break;
         }
 
